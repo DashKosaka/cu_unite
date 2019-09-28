@@ -1,4 +1,4 @@
-# Manufacturing SPC Dashboard
+# CU-Unite
 
 ## Introduction
 CU-Unite is the next big platform for students, faculty, or anybody in the CU area to start something great quickly, gaining the visibility and support they need. We focus on uniting the community.
