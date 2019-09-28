@@ -1,14 +1,15 @@
 # Manufacturing SPC Dashboard
 
 ## Introduction
-`Dash-manufacture-spc-dashboard` is a dashboard for monitoring real-time process quality along manufacture production line. 
-This is a demo of Dash interactive Python framework developed by [Plotly](https//plot.ly/).
+CU-Unite is the next big platform for students, faculty, or anybody in the CU area to start something great quickly, gaining the visibility and support they need. We focus on uniting the community.
+This is a demo of CU-Unite. Original Dash interactive Python framework developed by [Plotly](https://github.com/plotly/dash-sample-apps/tree/master/apps/dash-manufacture-spc-dashboard) and was adapted for cu-unite.
 
 ## Screenshots
-![initial](img/screencapture2.png)
+![initial](img/individual.png)
 
-![initial](img/screencapture1.png)
+![initial](img/organization.png)
 
+![initial](img/community.png)
 
 ## Built With
 * [Dash](https://dash.plot.ly/) - Main server and interactive components 
@@ -65,3 +66,4 @@ Operators may stop measurement by clicking `Stop` button, and edit specification
 ## Resources and references
 * [Shewhart statistical process control](https://en.wikipedia.org/wiki/Shewhart_individuals_control_chart)
 * [Dash User Guide](https://dash.plot.ly/)
+* [Adapted From Plotly](https://github.com/plotly/dash-sample-apps/tree/master/apps/dash-manufacture-spc-dashboard)
