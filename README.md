@@ -9,6 +9,8 @@ This is a demo of CU-Unite. Original Dash interactive Python framework developed
 
 ![initial](img/organization.png)
 
+![initial](img/organization_hfh.png)
+
 ![initial](img/community.png)
 
 ## Built With
