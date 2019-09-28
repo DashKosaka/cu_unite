@@ -151,46 +151,70 @@ def init_value_setter_store():
     state_dict = init_df()
     return state_dict
 
+def draw_user_line(label, value, col3):
+    return html.Div(
+        id='user-line',
+        children=[
+            html.Label(label, className="four columns"),
+            html.Label(value, className="four columns"),
+            html.Div(col3, className="four columns"),
+        ],
+        className="row",
+    )
 
 def build_individual_tab():
-    return [
+    return [build_value_setter_line(
+                "value-setter-panel-header",
+                "User",
+                "Organizations",
+                "Status",
+            ),
+            draw_user_line('Dash', 'Pyghack, Hackillinois, Alchemy', 'Alum'),
+            draw_user_line('Jason', 'Baja, Habitat for Humanity, Rec Volleyball, Beach Volleyball', 'Student'),
+            draw_user_line('Henry', 'Rec Volleyball, ML Club', 'Student'),
+            draw_user_line('Alice', 'Hacking for Good, Teaching Young Programmers', 'Community Member'),
+            draw_user_line('Michael', 'Rec Volleyball, Theta Tau', 'Student'),
+            draw_user_line('Emma', 'Cooking Without Contstraint', 'Community Member'),
+    ]
+    [
         html.Div(
             id="settings-menu",
             children=[
-                html.Div(
-                    id="metric-select-menu",
-                    # className='five columns',
-                    children=[
-                        html.Label(id="metric-select-title", children="Select User"),
-                        html.Br(),
-                        dcc.Dropdown(
-                            id="metric-select-dropdown",
-                            options=list(
-                                # {"label": param, "value": param} for param in params[1:]
-                                {"label": param, "value": param} for param in ['Dash', 'Henry', 'Michael', 'Jason']
-                            ),
-                            value=params[1],
-                        ),
-                        html.Br(),
-                        html.Button("Update", id="value-setter-set-btn"),
-                    ],
-                ),
+                html.Div(),
+                # html.Div(
+                #     id="metric-select-menu",
+                #     # className='five columns',
+                #     children=[
+                #         html.Label(id="metric-select-title", children="Select User"),
+                #         html.Br(),
+                #         dcc.Dropdown(
+                #             id="metric-select-dropdown",
+                #             options=list(
+                #                 # {"label": param, "value": param} for param in params[1:]
+                #                 {"label": param, "value": param} for param in ['Dash', 'Henry', 'Michael', 'Jason']
+                #             ),
+                #             value=params[1],
+                #         ),
+                #         html.Br(),
+                #         html.Button("Update", id="value-setter-set-btn"),
+                #     ],
+                # ),
                 html.Div(
                     id="value-setter-menu",
                     # className='six columns',
                     children=[
                         html.Div(id="value-setter-panel"),
                         html.Br(),
-                        html.Div(
-                            id="button-div",
-                            children=[
-                                html.Button(
-                                    "View current setup",
-                                    id="value-setter-view-btn",
-                                    n_clicks=0,
-                                ),
-                            ],
-                        ),
+                        # html.Div(
+                        #     id="button-div",
+                        #     children=[
+                        #         html.Button(
+                        #             "View current setup",
+                        #             id="value-setter-view-btn",
+                        #             n_clicks=0,
+                        #         ),
+                        #     ],
+                        # ),
                         html.Div(
                             id="value-setter-view-output", className="output-datatable"
                         ),
@@ -221,7 +245,7 @@ def build_value_setter_line(line_num, label, value, col3):
         children=[
             html.Label(label, className="four columns"),
             html.Label(value, className="four columns"),
-            # html.Div(col3, className="four columns"),
+            html.Div(col3, className="four columns"),
         ],
         className="row",
     )
@@ -324,7 +348,7 @@ def build_quick_stats_panel():
             ),
             html.Div(
                 id="support-card",
-                children=[daq.StopButton(id="support-button", size=160, n_clicks=0)],
+                children=[html.Button("Support Us!")],
             ),
             html.Div(
                 id="utility-card",
@@ -355,13 +379,13 @@ def build_top_panel(stopped_interval):
                     ]
     else:
         children = [
-                        generate_metric_row_helper(stopped_interval, 1),
-                        generate_metric_row_helper(stopped_interval, 2),
-                        generate_metric_row_helper(stopped_interval, 3),
                         generate_metric_row_helper(stopped_interval, 4),
                         generate_metric_row_helper(stopped_interval, 5),
                         generate_metric_row_helper(stopped_interval, 6),
                         generate_metric_row_helper(stopped_interval, 7),
+                        generate_metric_row_helper(stopped_interval, 1),
+                        generate_metric_row_helper(stopped_interval, 2),
+                        generate_metric_row_helper(stopped_interval, 3),
                     ]
 
     return html.Div(
@@ -637,6 +661,13 @@ def generate_metric_row_helper(stopped_interval, index):
 
 
 def generate_metric_row(id, style, col1, col2, col3, col4, col5, col6):
+    global org_state
+    # if org_state == 0 :
+    #     if id.lower not in [i.lower for i in ['Attendees_row','Guest Speakers_row','# Projects_row']]:
+    #         return html.Div()
+    # else:
+    #     if id.lower not in [i.lower for i in ['Volunteers_row','Trees Planted_row','Meals Given_row','Lbs Recycled']]:
+    #         return html.Div()
     if style is None:
         style = {"height": "8rem", "width": "100%"}
 
@@ -743,7 +774,7 @@ def generate_graph(interval, specs_dict, col):
     ooc_trace = {
         "x": [],
         "y": [],
-        "name": "Best Turnouts",
+        "name": "Outliers",
         "mode": "markers",
         "marker": dict(color="rgba(70, 210, 87, 0.7)", symbol="square", size=11),
     }
@@ -792,7 +823,7 @@ def generate_graph(interval, specs_dict, col):
         xaxis={
             "zeroline": False,
             "showgrid": False,
-            "title": "Batch Number",
+            "title": "Day",
             "showline": False,
             "domain": [0, 0.8],
             "titlefont": {"color": "darkgray"},
@@ -1076,9 +1107,9 @@ def stop_production(n_clicks, current):
 @app.callback(
     [Output("support-button", "buttonText")],
     [Input("support-button", "n_clicks")],
-    [State("interval-component", "disabled")],
+    # [State("interval-component", "disabled")],
 )
-def stop_production(n_clicks, current):
+def support_production(n_clicks):
     global org_state
     if n_clicks == 0:
         return "next"
@@ -1136,8 +1167,8 @@ def build_value_setter_panel(dd_select, state_value):
         [
             build_value_setter_line(
                 "value-setter-panel-header",
-                "Specs",
-                "Historical Value",
+                "User",
+                "Organizations",
                 "Set new value",
             ),
             build_value_setter_line(
@@ -1173,18 +1204,18 @@ def build_value_setter_panel(dd_select, state_value):
 
 
 # ====== Callbacks to update stored data via click =====
-@app.callback(
-    output=Output("value-setter-store", "data"),
-    inputs=[Input("value-setter-set-btn", "n_clicks")],
-    state=[
-        State("metric-select-dropdown", "value"),
-        State("value-setter-store", "data"),
-        State("ud_usl_input", "value"),
-        State("ud_lsl_input", "value"),
-        State("ud_ucl_input", "value"),
-        State("ud_lcl_input", "value"),
-    ],
-)
+# @app.callback(
+#     output=Output("value-setter-store", "data"),
+#     inputs=[Input("value-setter-set-btn", "n_clicks")],
+#     state=[
+#         State("metric-select-dropdown", "value"),
+#         State("value-setter-store", "data"),
+#         State("ud_usl_input", "value"),
+#         State("ud_lsl_input", "value"),
+#         State("ud_ucl_input", "value"),
+#         State("ud_lcl_input", "value"),
+#     ],
+# )
 def set_value_setter_store(set_btn, param, data, usl, lsl, ucl, lcl):
     if set_btn is None:
         return data
@@ -1199,14 +1230,14 @@ def set_value_setter_store(set_btn, param, data, usl, lsl, ucl, lcl):
         return data
 
 
-@app.callback(
-    output=Output("value-setter-view-output", "children"),
-    inputs=[
-        Input("value-setter-view-btn", "n_clicks"),
-        Input("metric-select-dropdown", "value"),
-        Input("value-setter-store", "data"),
-    ],
-)
+# @app.callback(
+#     output=Output("value-setter-view-output", "children"),
+#     inputs=[
+#         Input("value-setter-view-btn", "n_clicks"),
+#         Input("metric-select-dropdown", "value"),
+#         Input("value-setter-store", "data"),
+#     ],
+# )
 def show_current_specs(n_clicks, dd_select, store_data):
     if n_clicks > 0:
         curr_col_data = store_data[dd_select]
@@ -1321,7 +1352,6 @@ def update_control_chart(interval, n1, n2, n3, n4, n5, n6, n7, data, cur_fig):
             curr_id = cur_fig["data"][0]["name"]
             return generate_graph(interval, data, curr_id)
 
-
 # Update piechart
 @app.callback(
     output=Output("piechart", "figure"),
@@ -1329,6 +1359,22 @@ def update_control_chart(interval, n1, n2, n3, n4, n5, n6, n7, data, cur_fig):
     state=[State("value-setter-store", "data")],
 )
 def update_piechart(interval, stored_data):
+    global org_state
+
+    pie_labels = params[1:5] if org_state == 0 else params[4:]
+
+    if interval >= max_length:
+        total_count = max_length - 1
+    else:
+        total_count = interval - 1
+
+    values = []
+    colors = []
+    pick_from = ['#f45060', '#f4f060', '#f450f0', '#646677']
+    for idx, label in enumerate(pie_labels):
+        values.append(stored_data[label]["ooc"][total_count]*100+1)
+        colors.append(pick_from[idx])
+
     if interval == 0:
         return {
             "data": [],
@@ -1339,6 +1385,30 @@ def update_piechart(interval, stored_data):
             },
         }
 
+    new_figure = {
+        "data": [
+            {
+                "labels": pie_labels,
+                "values": values,
+                "type": "pie",
+                "marker": {"colors": colors, "line": dict(color="white", width=2)},
+                "hoverinfo": "label",
+                "textinfo": "label",
+            }
+        ],
+        "layout": {
+            "margin": dict(t=20, b=50),
+            "uirevision": True,
+            "font": {"color": "white"},
+            "showlegend": False,
+            "paper_bgcolor": "rgba(0,0,0,0)",
+            "plot_bgcolor": "rgba(0,0,0,0)",
+            "autosize": True,
+        },
+    }
+
+    return new_figure
+
     if interval >= max_length:
         total_count = max_length - 1
     else:
@@ -1346,10 +1416,11 @@ def update_piechart(interval, stored_data):
 
     values = []
     colors = []
-    for param in params[1:]:
+    for idx, param in enumerate(pie_data):
+        
         ooc_param = (stored_data[param]["ooc"][total_count] * 100) + 1
         values.append(ooc_param)
-        if ooc_param > 6:
+        if idx == 2:
             colors.append("#f45060")
         else:
             colors.append("#91dfd2")

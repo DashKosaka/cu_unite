@@ -156,7 +156,7 @@ body {
   height: 18px;
 }
 
-#Specs-tab.custom-tab--selected, #Control-chart-tab.custom-tab--selected, #Community-tab.custom.tab--selected {
+#Specs-tab.custom-tab--selected, #Control-chart-tab.custom-tab--selected, #Community-tab.custom-tab--selected {
   border-bottom: #91dfd2 solid 4px !important;
 }
 
@@ -309,6 +309,10 @@ body {
   justify-content: flex-end;
 }
 
+/* #user-line {
+  margin-left: 5px
+} */
+
 #value-setter-view-btn {
   margin-left: 20px;
 }
@@ -317,16 +321,17 @@ body {
   line-height: 2;
 }
 
-#value-setter-panel-header {
+#value-setter-panel-header, #user-line {
   font-weight: bold;
   color: darkgray;
   line-height: 1;
   padding: 2rem 0;
+  margin-left: 5px;
   border-bottom: 1px solid #4b5460;
 }
 
 #value-setter-panel-header > div {
-  text-align: right;
+  text-align: center;
 }
 
 #value-setter-view-btn, #value-setter-set-btn {
@@ -681,6 +686,7 @@ body {
   }
 
   #value-setter-panel-header {
+    margin-left: 5px;
     display: none;
   }
 
